@@ -1,8 +1,15 @@
-const { response } = require("express");
+const { response, request} = require("express");
 
-const usersGet = (req, res = response) => {
+const usersGet = (req = request, res = response) => {
+
+  const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;
   res.json({
     message: "get API - controller",
+    q,
+    nombre,
+    apikey,
+    page,
+    limit
   });
 };
 
@@ -17,8 +24,10 @@ const usersPost = (req, res = response) => {
 };
 
 const usersPut = (req, res = response) => {
+  const id = req.params.id;
   res.json({
     message: "put API - controller",
+    id
   });
 };
 
