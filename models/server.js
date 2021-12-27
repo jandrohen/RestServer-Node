@@ -10,6 +10,7 @@ class Server{
         this.usersPath = '/api/users';
 
         // Middlewares
+        this.middlewares();
 
         // Routes of the application
         this.routes();
@@ -19,6 +20,9 @@ class Server{
 
         // CORS
         this.app.use(cors());
+
+        // Read and parse of the body
+        this.app.use( express.json() );
 
         // Directory public
         this.app.use( express.static('public'));
