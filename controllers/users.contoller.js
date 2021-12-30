@@ -1,6 +1,5 @@
 const { response, request} = require("express");
 const bcryptjs = require("bcryptjs");
-const {validationResult} = require("express-validator");
 
 const User = require("../models/user");
 
