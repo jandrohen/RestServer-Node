@@ -57,10 +57,13 @@ const usersPatch = (req, res = response) => {
   });
 };
 
-const usersDelete = (req, res = response) => {
-  res.json({
-    message: "delete API - controller",
-  });
+const usersDelete = async (req, res = response) => {
+  const { id } = req.params;
+  const user = await User.findByIdAndUpdate( id, { state : false } );
+
+  // Physically delete
+  // const user = await User.findByIdAndDelete( id );
+  res.json(user);
 };
 
 module.exports = {
