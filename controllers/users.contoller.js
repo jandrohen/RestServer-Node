@@ -33,11 +33,22 @@ const usersPost = async (req, res = response) => {
   });
 };
 
-const usersPut = (req, res = response) => {
-  const id = req.params.id;
+const usersPut = async (req, res = response) => {
+  const { id } = req.params;
+  const { password, google, email, ...rest } = req.body;
+
+  // TAREA validate against the database
+  if ( password ) {
+    // Password hashed
+    const salt = bcryptjs.genSaltSync();
+    rest.password = bcryptjs.hashSync(password, salt);
+  }
+
+  const user = await  User.findByIdAndUpdate( id, rest );
+
   res.json({
     message: "put API - controller",
-    id
+    user
   });
 };
 
