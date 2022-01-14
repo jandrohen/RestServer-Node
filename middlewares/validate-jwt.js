@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 
-const validateJwt = async (req, res = response, next) => {
+const validateJWT = async (req, res = response, next) => {
     const token = req.header('x-token');
 
     if ( !token ){
@@ -25,7 +25,7 @@ const validateJwt = async (req, res = response, next) => {
         }
 
         // Check if the user has true status
-        if (!userAuth.status){
+        if (!userAuth.state){
             return res.status(401).json({
                 msg: "Token no válido - user state: false"
             })
@@ -42,5 +42,5 @@ const validateJwt = async (req, res = response, next) => {
 }
 
 module.exports = {
-    validateJwt
+    validateJWT
 }
