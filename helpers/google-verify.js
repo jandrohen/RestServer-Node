@@ -14,9 +14,9 @@ async function googleVerify( token = '') {
     const { name, picture, email } = ticket.getPayload();
 
     return {
+        email,
         name,
         img: picture,
-        email,
     }
 }
 
