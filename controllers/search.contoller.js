@@ -1,14 +1,48 @@
-const { response, request } = require("express");
+const { response } = require("express");
+const {User, Category, Product} = require("../models");
+const { ObjectId } = require('mongoose').Types
 
-const search = async (req = request, res = response) => {
+const validsCollections = [
+    'users',
+    'categories',
+    'products',
+    'roles'
+]
+
+const searchUsers = async (term = '', res = response) =>{
+  const isMongoId = ObjectId.isValid( term );
+
+  if ( isMongoId ) {
+    const user = await User.findById(term);
+    res.json({
+      results: (user) ? [user] : []
+    })
+  }
+}
+
+
+const search = async (req , res = response) => {
   const { collection, term } = req.params;
 
-
-    res.json({
-      collection,
-      term,
-      msg: 'Buscar...'
+  if ( !validsCollections.includes( collection )){
+    return res.status(400).json({
+      msg: `Las colecciones permitidas son ${validsCollections}`
     })
+  }
+
+  switch (collection) {
+    case 'users':
+      await searchUsers(term,res);
+      break;
+    case 'categories':
+      break;
+    case 'products':
+      break;
+    default:
+      res.status(500).json({
+        msg: 'Hable con el admin sobre las búsquedas'
+      })
+  }
 
 };
 
