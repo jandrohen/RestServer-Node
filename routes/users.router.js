@@ -10,16 +10,16 @@ const { validateFields,
 const {isRoleValid, existEmail, existUserId} = require("../helpers/db-validators");
 
 const {
-  usersGet,
-  usersPost,
-  usersPut,
-  usersPatch,
-  usersDelete,
+    getUsers,
+    postUser,
+    putUser,
+    patchUser,
+    deleteUser,
 } = require("../controllers/users.contoller");
 
 const router = Router();
 
-router.get("/", usersGet);
+router.get("/", getUsers);
 
 router.post("/", [
     check('name', 'El name es obligatorio').notEmpty(),
@@ -28,24 +28,24 @@ router.post("/", [
     check('email').custom( existEmail ),
     check('role').custom( isRoleValid ),
   validateFields
-], usersPost);
+], postUser);
 
 router.put("/:id",[
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom( existUserId ),
     check('role').custom( isRoleValid ),
     validateFields
-], usersPut);
+], putUser);
 
-router.patch("/", usersPatch);
+router.patch("/", patchUser);
 
 router.delete("/:id",[
     validateJWT,
     // isAdminRole,
-        hasRole('ADMIN_ROLE', 'VENTAS_ROLE', 'ANY_ROLE'),
+        hasRole('ADMIN_ROLE', 'VENTAS_ROLE'),
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom( existUserId ),
     validateFields
-], usersDelete);
+], deleteUser);
 
 module.exports = router;
