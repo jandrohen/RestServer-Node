@@ -1,7 +1,5 @@
-const path = require('path')
-const { v4: uuidv4 } = require('uuid');
-
 const { response, request } = require("express");
+const { uploadFiles } = require("../helpers")
 
 const uploadFile = async (req = request, res = response) => {
 
@@ -10,28 +8,10 @@ const uploadFile = async (req = request, res = response) => {
     return;
   }
 
-  const { archivo } = req.files;
-  const modifyName = archivo.name.split('.');
-  const format = modifyName[ modifyName.length - 1 ];
+  // Images
+  const name = await  uploadFiles(req.files);
 
-  // Validate the format
-  const validateFormat = ['png','jpg','jpeg','gif'];
-  if (!validateFormat.includes(format.toLowerCase())) {
-    return res.status(400).json({
-      msg: `La extension ${ format } no es permitida, ${ validateFormat }`
-    });
-  }
-
-  const finalName = uuidv4() + '.' + format;
-  const uploadPath = path.join( __dirname , '../uploads/' , finalName );
-
-  archivo.mv(uploadPath, (err) => {
-    if (err) {
-      return res.status(500).json({ err });
-    }
-
-    res.json({ msg:'File uploaded to ' + uploadPath });
-  });
+  res.json({ name })
 };
 
 
