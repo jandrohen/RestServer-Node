@@ -1,6 +1,9 @@
 const express = require('express')
 const cors = require("cors");
+const fileUpload = require('express-fileupload');
+
 const {dbConnection} = require("../database/config.db");
+
 
 
 class Server{
@@ -42,6 +45,12 @@ class Server{
 
         // Directory public
         this.app.use( express.static('public'));
+
+        // Fileupload - upload of files
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/'
+        }));
     }
 
     routes() {
