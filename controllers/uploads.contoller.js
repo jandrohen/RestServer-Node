@@ -9,6 +9,18 @@ const uploadFile = async (req = request, res = response) => {
   }
 
   const { archivo } = req.files;
+  const modifyName = archivo.name.split('.');
+  const format = modifyName[ modifyName.length - 1 ];
+
+  // Validate the format
+  const validateFormat = ['png','jpg','jpeg','gif'];
+  if (!validateFormat.includes(format)){
+    return res.status(400).json({
+      msg: `La extension ${ format } no es permitida, ${ validateFormat }`
+    });
+  }
+
+  res.json({ format });
 
   const uploadPath = path.join( __dirname , '../uploads/' , archivo.name );
 
