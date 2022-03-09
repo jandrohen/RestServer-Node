@@ -4,10 +4,6 @@ const { uploadFiles } = require("../helpers");
 const { User, Product} = require("../models");
 
 const uploadFile = async (req = request, res = response) => {
-  if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
-    res.status(400).send({ msg: "No hay archivos en la petición" });
-    return;
-  }
 
   try {
     // EXAMPLE (txt,md)
@@ -22,10 +18,7 @@ const uploadFile = async (req = request, res = response) => {
 };
 
 const updateImage = async (req = request, res = response) => {
-  if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
-    res.status(400).send({ msg: "No hay archivos en la petición" });
-    return;
-  }
+
   const { id, collection } = req.params;
 
   let model;
