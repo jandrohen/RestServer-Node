@@ -54,3 +54,7 @@ Thumbs.db
 
 # dotenv environment variables file
 .env
+
+# clients files
+uploads/products/**
+uploads/users/**

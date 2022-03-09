@@ -99,19 +99,17 @@ const viewImage = async (req = request, res = response) => {
       return res.status(500).json({ msg: "No he validado esto" });
   }
 
-  // Clean preview images
+  // Send the image of the user or product if you have it.
   if ( model.img ){
-    // Delete server image
     const pathImage = path.join( __dirname, '../uploads', collection, model.img );
     if ( fs.existsSync(pathImage) ){
       return res.sendFile(pathImage)
     }
   }
 
-  res.json({
-    msg: 'Falta place holder'
-  });
-
+  // Send a template image if you do not have
+  const pathImage = path.join( __dirname,'../assets/no-image.jpg');
+  res.sendFile( pathImage )
 }
 
 module.exports = {
