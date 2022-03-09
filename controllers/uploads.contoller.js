@@ -148,11 +148,10 @@ const updateImageCloudinary = async (req = request, res = response) => {
 
   // Clean preview images
   if ( model.img ){
-    // // Delete server image
-    // const pathImage = path.join( __dirname, '../uploads', collection, model.img );
-    // if ( fs.existsSync(pathImage) ){
-    //   fs.unlinkSync(pathImage);
-    // }
+    const nameArr = model.img.split("/");
+    const name = nameArr[nameArr.length - 1];
+    const [ public_id ] = name.split('.');
+    await cloudinary.uploader.destroy( public_id );
   }
 
   const { tempFilePath } = req.files.archivo;
@@ -164,6 +163,7 @@ const updateImageCloudinary = async (req = request, res = response) => {
 
   res.json(model);
 };
+
 module.exports = {
   uploadFile,
   updateImage,
