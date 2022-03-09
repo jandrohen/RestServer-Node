@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
 
