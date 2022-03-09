@@ -38,10 +38,19 @@ const existProductId = async ( id ) => {
         throw new Error(`El id: ${ id }, no existe en la BD`);
     }
 }
+
+const permittedCollection = async (collection= '', collections = []) => {
+    const include = collection.includes(collection);
+    if ( !include ) {
+        throw new Error(`El colección: ${ collection }, no es permitida, ${collections}`);
+    }
+    return true;
+}
 module.exports = {
     isRoleValid,
     existEmail,
     existUserId,
     existCategoryId,
-    existProductId
+    existProductId,
+    permittedCollection
 }
