@@ -46,10 +46,11 @@ class Server{
         // Directory public
         this.app.use( express.static('public'));
 
-        // Fileupload - upload of files
+        // Fileupload - upload of files and create dir if not exist
         this.app.use(fileUpload({
             useTempFiles : true,
-            tempFileDir : '/tmp/'
+            tempFileDir : '/tmp/',
+            createParentPath: true
         }));
     }
 

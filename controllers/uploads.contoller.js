@@ -8,10 +8,18 @@ const uploadFile = async (req = request, res = response) => {
     return;
   }
 
-  // Images
-  const name = await  uploadFiles(req.files);
+  try {
+    // EXAMPLE (txt,md)
+    // const name = await  uploadFiles(req.files, ['txt','md'], 'text');
 
-  res.json({ name })
+    // Images
+    const name = await  uploadFiles(req.files, undefined, 'img');
+    res.json({ name })
+  }
+  catch (msg) {
+    res.status(400).send({ msg });
+  }
+
 };
 
 
